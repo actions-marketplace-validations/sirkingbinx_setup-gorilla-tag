@@ -5,7 +5,6 @@ name: Build
 
 on:
   push:
-    branches: [ master ]
   workflow_dispatch:
 
 jobs:
@@ -25,7 +24,11 @@ jobs:
         uses: sirkingbinx/setup-gorilla-tag@1.0.0
 
       - name: Build Solution
-        run: |
-          dotnet build -c Debug
-          dotnet build -c Release
+        run: dotnet build -c Debug -o ./build
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: ./build/
 ```
